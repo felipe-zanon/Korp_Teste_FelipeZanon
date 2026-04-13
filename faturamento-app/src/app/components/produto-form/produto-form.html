@@ -1,0 +1,44 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Cadastro de Produto</mat-card-title>
+      <mat-card-subtitle>Adicione novos produtos ao estoque</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="campo-curto">
+          <mat-label>Código</mat-label>
+          <input matInput disabled placeholder="Gerado pelo sistema">
+          <mat-icon matSuffix>qr_code</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo-descricao">
+          <mat-label>Descrição</mat-label>
+          <input matInput [(ngModel)]="descricao" placeholder="Nome do produto">
+          <mat-icon matSuffix>inventory</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo-curto">
+          <mat-label>Saldo Inicial</mat-label>
+          <input matInput type="number" [(ngModel)]="saldo" min="0">
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="mensagem" class="mensagem" [ngClass]="{'sucesso': sucesso, 'erro': !sucesso}">
+        <mat-icon>{{ sucesso ? 'check_circle' : 'error' }}</mat-icon>
+        <span>{{ mensagem }}</span>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" 
+              [disabled]="!descricao || saldo === null || saldo < 0 || salvando"
+              (click)="salvar()">
+        <mat-spinner *ngIf="salvando" diameter="20"></mat-spinner>
+        <mat-icon *ngIf="!salvando">save</mat-icon>
+        <span>{{ salvando ? 'Salvando...' : 'Cadastrar Produto' }}</span>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

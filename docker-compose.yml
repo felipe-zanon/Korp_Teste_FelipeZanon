@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db-estoque:
+    image: postgres:16
+    container_name: postgres_estoque
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: estoque_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_estoque:/var/lib/postgresql/data
+
+  db-faturamento:
+    image: postgres:16
+    container_name: postgres_faturamento
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: faturamento_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata_faturamento:/var/lib/postgresql/data
+
+volumes:
+  pgdata_estoque:
+  pgdata_faturamento:

@@ -1,0 +1,49 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Estoque Disponível</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="loading-shade" *ngIf="carregando">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+
+      <div class="error-msg" *ngIf="erro">
+        <mat-icon color="warn">error</mat-icon>
+        <span>{{ erro }}</span>
+      </div>
+
+      <table mat-table [dataSource]="produtos" class="mat-elevation-z8" *ngIf="!carregando && !erro">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let prod"> {{prod.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef> Código </th>
+          <td mat-cell *matCellDef="let prod"> {{prod.codigo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descricao">
+          <th mat-header-cell *matHeaderCellDef> Produto </th>
+          <td mat-cell *matCellDef="let prod"> <strong>{{prod.descricao}}</strong> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="saldo">
+          <th mat-header-cell *matHeaderCellDef> Saldo em Estoque </th>
+          <td mat-cell *matCellDef="let prod"> {{prod.saldo}} un. </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+      </table>
+
+      <p *ngIf="!carregando && !erro && produtos.length === 0">
+        Nenhum produto cadastrado ainda.
+      </p>
+
+    </mat-card-content>
+  </mat-card>
+</div>

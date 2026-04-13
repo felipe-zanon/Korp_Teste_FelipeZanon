@@ -1,0 +1,70 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Caixa Korp - Faturamento</mat-card-title>
+      
+      <mat-card-subtitle *ngIf="notaCriada">
+        Nota Nº: <strong>{{ notaCriada.numeroSequencial }}</strong> | Status: 
+        <mat-chip [color]="notaCriada.status === 'Aberta' ? 'primary' : 'accent'" highlighted>
+          {{ notaCriada.status }}
+        </mat-chip>
+      </mat-card-subtitle>
+      <mat-card-subtitle *ngIf="!notaCriada">Nova Venda (Rascunho)</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="form-row" *ngIf="!notaCriada">
+        <mat-form-field appearance="outline" class="campo-produto">
+          <mat-label>Selecione o Produto</mat-label>
+          <mat-select [(ngModel)]="produtoSelecionadoId">
+            <mat-option *ngFor="let prod of produtosDisponiveis" [value]="prod.id">
+              {{prod.codigo}} - {{prod.descricao}} (Saldo atual: {{prod.saldo}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo-qtd">
+          <mat-label>Qtd</mat-label>
+          <input matInput type="number" min="1" [(ngModel)]="quantidadeSelecionada">
+        </mat-form-field>
+
+        <button mat-fab extended color="primary" (click)="adicionarItem()" [disabled]="!produtoSelecionadoId">
+          <mat-icon>add</mat-icon> Adicionar
+        </button>
+      </div>
+
+      <mat-list *ngIf="itens.length > 0 || (notaCriada && notaCriada.itens)">
+        <div mat-subheader>Itens Lançados</div>
+        <mat-list-item *ngFor="let item of (notaCriada ? notaCriada.itens : itens)">
+          <mat-icon matListItemIcon>inventory_2</mat-icon>
+          <div matListItemTitle>{{item.nomeProduto}}</div>
+          <div matListItemLine>Quantidade: {{item.quantidade}} unidades</div>
+        </mat-list-item>
+      </mat-list>
+
+      <div *ngIf="mensagemDeRetorno" class="mensagem" [ngClass]="{'sucesso': sucesso, 'erro': !sucesso}">
+        <mat-icon>{{ sucesso ? 'check_circle' : 'error' }}</mat-icon>
+        <span>{{ mensagemDeRetorno }}</span>
+      </div>
+    </mat-card-content>
+
+  <mat-card-actions align="end">
+      
+      <button mat-raised-button color="warn" class="btn-acao" 
+              *ngIf="!notaCriada"
+              [disabled]="itens.length === 0 || processando" 
+              (click)="imprimirNota()">
+        <mat-spinner *ngIf="processando" diameter="24" color="accent"></mat-spinner>
+        <span *ngIf="!processando"><mat-icon>print</mat-icon> Imprimir Nota Fiscal</span>
+        <span *ngIf="processando">Integrando...</span>
+      </button>
+
+      <button mat-button color="primary" class="btn-acao" 
+              *ngIf="notaCriada"
+              (click)="novaVenda()">
+        Iniciar Nova Venda
+      </button>
+
+    </mat-card-actions>
+  </mat-card>
+</div>

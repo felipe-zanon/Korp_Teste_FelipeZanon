@@ -1,0 +1,7 @@
+.container { padding: 24px; max-width: 1000px; margin: 0 auto; }
+.form-row { display: flex; gap: 16px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+.campo-descricao { flex-grow: 1; }
+.campo-saldo { width: 120px; }
+.mensagem { display: flex; align-items: center; gap: 8px; padding: 16px; margin-top: 16px; font-weight: bold; border-radius: 4px; }
+.sucesso { background-color: #e8f5e9; color: #2e7d32; }
+.erro { background-color: #ffebee; color: #c62828; }

@@ -1,0 +1,22 @@
+.container {
+  padding: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+table {
+  width: 100%;
+  margin-top: 16px;
+}
+.loading-shade {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+.error-msg {
+  display: flex;
+  align-items: center;
+  color: #f44336;
+  gap: 8px;
+  padding: 20px;
+  font-weight: bold;
+}
