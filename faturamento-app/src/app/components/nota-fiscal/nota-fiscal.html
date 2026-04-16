@@ -37,7 +37,9 @@
         <div mat-subheader>Itens Lançados</div>
         <mat-list-item *ngFor="let item of (notaCriada ? notaCriada.itens : itens)">
           <mat-icon matListItemIcon>inventory_2</mat-icon>
-          <div matListItemTitle>{{item.nomeProduto}}</div>
+          
+          <div matListItemTitle><strong>{{ getNomeProduto(item.produtoId) }}</strong></div>
+          
           <div matListItemLine>Quantidade: {{item.quantidade}} unidades</div>
         </mat-list-item>
       </mat-list>

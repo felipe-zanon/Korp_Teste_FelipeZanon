@@ -50,20 +50,31 @@ export class NotaListaComponent implements OnInit {
       }
     });
   }
-  // Adicione este método na classe NotaListaComponent
   imprimirNota(id: number) {
+    // Ativa o spinner no botão exato que foi clicado
+    this.imprimindo = id;
+
     this.apiService.imprimirNota(id).subscribe({
-      next: (notaAtualizada : NotaFiscal) => {
-        // 1. Recarrega a lista para mostrar o novo status "Fechada"
-        this.carregarNotas(); 
-        
-        // 2. Avisa o componente de Estoque para atualizar os saldos
-        this.refreshService.triggerRefreshEstoque(); 
-        
+      next: (notaAtualizada: NotaFiscal) => {
+        // Desativa o spinner
+        this.imprimindo = 0;
+
+        // Recarrega a lista para mostrar o status "Fechada"
+        this.carregarNotas();
+
+        // Avisa o componente de Estoque para atualizar os saldos
+        this.refreshService.triggerRefreshEstoque();
+
         alert(`Sucesso! A Nota #${id} foi impressa e o estoque foi baixado.`);
       },
-      error: (err: Error) => {
-        alert(`Erro ao imprimir a nota #${id}: ` + err.message);
+      error: (err: any) => {
+        // Desativa o spinner caso ocorra um erro
+        this.imprimindo = 0;
+
+        // Tenta ler o JSON customizado do C#, se falhar (500), mostra a mensagem amigável de fallback
+        const mensagemAmigavel = err.error?.error || 'O serviço de Estoque está temporariamente indisponível. A nota permanece Aberta. Tente novamente em instantes.';
+
+        alert(mensagemAmigavel);
       }
     });
   }

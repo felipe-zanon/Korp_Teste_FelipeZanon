@@ -37,6 +37,13 @@ export class NotaFiscalComponent implements OnInit {
   processando = false;
   mensagemDeRetorno = '';
   sucesso = false;
+  // Função para cruzar o ID da nota com o nome do produto carregado do estoque
+  getNomeProduto(id: number): string {
+    if (!this.produtosDisponiveis || this.produtosDisponiveis.length === 0) return `Produto #${id}`;
+    
+    const produto = this.produtosDisponiveis.find(p => p.id === id);
+    return produto ? produto.descricao : `Produto #${id}`;
+  }
 
   ngOnInit() {
     this.carregarProdutos();
