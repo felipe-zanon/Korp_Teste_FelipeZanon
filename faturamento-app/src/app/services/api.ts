@@ -65,6 +65,10 @@ export class ApiService {
       catchError(this.handleError)
     );
   }
+  // Adicione junto com os outros métodos que já existem aí
+  imprimirNota(id: number): Observable<NotaFiscal> {
+    return this.http.post<NotaFiscal>(`${this.faturamentoUrl}/${id}/imprimir`, {});
+  }
 
 
   private handleError(error: HttpErrorResponse) {

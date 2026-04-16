@@ -2,16 +2,11 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>Cadastro de Produto</mat-card-title>
-      <mat-card-subtitle>Adicione novos produtos ao estoque</mat-card-subtitle>
+      
     </mat-card-header>
 
     <mat-card-content>
       <div class="form-row">
-        <mat-form-field appearance="outline" class="campo-curto">
-          <mat-label>Código</mat-label>
-          <input matInput disabled placeholder="Gerado pelo sistema">
-          <mat-icon matSuffix>qr_code</mat-icon>
-        </mat-form-field>
 
         <mat-form-field appearance="outline" class="campo-descricao">
           <mat-label>Descrição</mat-label>
@@ -37,7 +32,7 @@
               (click)="salvar()">
         <mat-spinner *ngIf="salvando" diameter="20"></mat-spinner>
         <mat-icon *ngIf="!salvando">save</mat-icon>
-        <span>{{ salvando ? 'Salvando...' : 'Cadastrar Produto' }}</span>
+        <span>{{ salvando ? 'Salvando...' : 'Cadastrar' }}</span>
       </button>
     </mat-card-actions>
   </mat-card>

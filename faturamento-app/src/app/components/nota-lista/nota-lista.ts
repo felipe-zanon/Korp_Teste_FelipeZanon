@@ -7,14 +7,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ApiService, NotaFiscal } from '../../services/api'; 
+import { RefreshService } from '../../services/refresh.services';
 
-interface NotaFiscal {
-  id: number;
-  numeroSequencial: number;
-  status: string;
-  dataCriacao: string;
-  itens: any[];
-}
 
 @Component({
   selector: 'app-nota-lista',
@@ -29,6 +24,8 @@ interface NotaFiscal {
 export class NotaListaComponent implements OnInit {
   private http = inject(HttpClient);
   private cdr = inject(ChangeDetectorRef);
+  private apiService = inject(ApiService);
+  private refreshService = inject(RefreshService);
 
   notas: NotaFiscal[] = [];
   colunas = ['numeroSequencial', 'status', 'dataCriacao', 'itens', 'acoes'];
@@ -53,7 +50,23 @@ export class NotaListaComponent implements OnInit {
       }
     });
   }
-
+  // Adicione este método na classe NotaListaComponent
+  imprimirNota(id: number) {
+    this.apiService.imprimirNota(id).subscribe({
+      next: (notaAtualizada : NotaFiscal) => {
+        // 1. Recarrega a lista para mostrar o novo status "Fechada"
+        this.carregarNotas(); 
+        
+        // 2. Avisa o componente de Estoque para atualizar os saldos
+        this.refreshService.triggerRefreshEstoque(); 
+        
+        alert(`Sucesso! A Nota #${id} foi impressa e o estoque foi baixado.`);
+      },
+      error: (err: Error) => {
+        alert(`Erro ao imprimir a nota #${id}: ` + err.message);
+      }
+    });
+  }
   imprimir(nota: NotaFiscal) {
     if (nota.status !== 'Aberta') return;
     this.imprimindo = nota.id;

@@ -1,15 +1,15 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Caixa Korp - Faturamento</mat-card-title>
+      <mat-card-title>Faturamento</mat-card-title>
       
       <mat-card-subtitle *ngIf="notaCriada">
-        Nota Nº: <strong>{{ notaCriada.numeroSequencial }}</strong> | Status: 
+        Nota Nº: <strong>{{ notaCriada.id }}</strong> | Status: 
         <mat-chip [color]="notaCriada.status === 'Aberta' ? 'primary' : 'accent'" highlighted>
           {{ notaCriada.status }}
         </mat-chip>
       </mat-card-subtitle>
-      <mat-card-subtitle *ngIf="!notaCriada">Nova Venda (Rascunho)</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="!notaCriada">Nova Venda</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
@@ -50,14 +50,14 @@
 
   <mat-card-actions align="end">
       
-      <button mat-raised-button color="warn" class="btn-acao" 
-              *ngIf="!notaCriada"
-              [disabled]="itens.length === 0 || processando" 
-              (click)="imprimirNota()">
-        <mat-spinner *ngIf="processando" diameter="24" color="accent"></mat-spinner>
-        <span *ngIf="!processando"><mat-icon>print</mat-icon> Imprimir Nota Fiscal</span>
-        <span *ngIf="processando">Integrando...</span>
-      </button>
+      <button mat-raised-button color="primary" class="btn-acao" 
+        *ngIf="!notaCriada"
+        [disabled]="itens.length === 0 || processando" 
+        (click)="emitirNota()">
+  <mat-spinner *ngIf="processando" diameter="24" color="accent"></mat-spinner>
+  <span *ngIf="!processando"><mat-icon>note_add</mat-icon> Emitir Nota Fiscal</span>
+  <span *ngIf="processando">Processando...</span>
+</button>
 
       <button mat-button color="primary" class="btn-acao" 
               *ngIf="notaCriada"

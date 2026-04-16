@@ -31,14 +31,14 @@ export class ProdutoFormComponent {
   sucesso = false;
 
   salvar() {
-    // AJUSTE 1: Removemos a obrigatoriedade do this.codigo
+    
     if (!this.descricao || this.saldo < 0) return;
 
     this.salvando = true;
     this.mensagem = '';
 
     this.http.post('http://localhost:5034/api/produtos', {
-      codigo: "GERAR_AUTO", // AJUSTE 2: Enviamos uma string genérica para o C# sobrescrever
+      codigo: "GERAR_AUTO", 
       descricao: this.descricao,
       saldo: this.saldo
     }).subscribe({

@@ -13,7 +13,7 @@
 
         <ng-container matColumnDef="numeroSequencial">
           <th mat-header-cell *matHeaderCellDef> Nº Nota </th>
-          <td mat-cell *matCellDef="let nota"> <strong>#{{nota.numeroSequencial}}</strong> </td>
+          <td mat-cell *matCellDef="let nota"> <strong>#{{nota.id}}</strong> </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
@@ -40,7 +40,7 @@
           <td mat-cell *matCellDef="let nota">
             <button mat-raised-button color="warn"
                     [disabled]="nota.status !== 'Aberta' || imprimindo === nota.id"
-                    (click)="imprimir(nota)">
+                    (click)="imprimirNota(nota.id)">
               <mat-spinner *ngIf="imprimindo === nota.id" diameter="20"></mat-spinner>
               <mat-icon *ngIf="imprimindo !== nota.id">print</mat-icon>
               {{ imprimindo === nota.id ? 'Imprimindo...' : 'Imprimir' }}

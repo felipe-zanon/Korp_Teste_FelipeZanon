@@ -28,15 +28,15 @@ namespace Estoque.API.Controllers
        [HttpPost]
 public async Task<IActionResult> CriarProduto([FromBody] Produto produto)
 {
-    // 1. Busca o último produto cadastrado para saber qual foi o último ID
+    // Busca o último produto cadastrado para saber qual foi o último ID
     var ultimoProduto = await _context.Produtos
                                       .OrderByDescending(p => p.Id)
                                       .FirstOrDefaultAsync();
 
-    // 2. Calcula qual será o próximo ID (se for o primeiro, será 1)
+    // Calcula qual será o próximo ID (se for o primeiro, será 1)
     int proximoId = (ultimoProduto?.Id ?? 0) + 1;
 
-    // 3. SOBRESCREVE o "GERAR_AUTO" com o formato padrão da Korp
+    // SOBRESCREVE o "GERAR_AUTO" 
     produto.Codigo = $"PRD-{proximoId:D3}"; 
 
     // 4. Salva no banco de dados
@@ -68,7 +68,7 @@ public async Task<IActionResult> CriarProduto([FromBody] Produto produto)
             }
             catch (DbUpdateConcurrencyException)
             {
-                // A mágica da concorrência (Opcional A) em ação!
+                // Concorrência
                 return Conflict("O estoque deste produto foi alterado por outra transação. Tente novamente.");
             }
         }

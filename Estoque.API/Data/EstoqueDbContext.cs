@@ -11,11 +11,10 @@ namespace Estoque.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // O Diferencial (Opcional A): Concorrência Otimista
-            // Nova sintaxe do EF Core 8+ para utilizar a coluna oculta 'xmin' do PostgreSQL
+            
             modelBuilder.Entity<Produto>()
-                .Property<uint>("Version") // Cria uma "Shadow Property" (propriedade fantasma)
-                .IsRowVersion();           // Marca como o rastreador de versão/concorrência
+                .Property<uint>("Version") 
+                .IsRowVersion();           
         }
     }
 }

@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// Injeção do Banco de Dados PostgreSQL
+// Injeção do DB
 builder.Services.AddDbContext<EstoqueDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Ativa o tratamento global de exceções
+// Ativa o tratamento de exceções
 app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
