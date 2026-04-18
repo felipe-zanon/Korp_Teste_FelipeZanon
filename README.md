@@ -1,8 +1,6 @@
 # Sistema de Emissão de Notas Fiscais
 
-> Projeto Técnico Korp | Felipe Zanon
-
-Sistema fullstack de emissão de notas fiscais com arquitetura de microsserviços, desenvolvido com Angular 18, ASP.NET Core 8 e PostgreSQL.
+Projeto técnico de sistema fullstack de emissão de notas fiscais com arquitetura de microsserviços, desenvolvido com Angular, ASP.NET Core e PostgreSQL.
 
 ---
 
@@ -10,8 +8,8 @@ Sistema fullstack de emissão de notas fiscais com arquitetura de microsserviço
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                   Angular 18 (porta 4200)                │
-│         Standalone Components + Angular Material         │
+│                   Angular 18 (porta 4200)               │
+│         Standalone Components + Angular Material        │
 └────────────────────┬────────────────────────────────────┘
                      │ HTTP REST
         ┌────────────┴────────────┐
@@ -19,22 +17,22 @@ Sistema fullstack de emissão de notas fiscais com arquitetura de microsserviço
         ▼                         ▼
 ┌───────────────┐        ┌─────────────────────┐
 │  Estoque.API  │◄───────│   Faturamento.API   │
-│  porta 5034   │        │     porta 5081       │
+│  porta 5034   │        │     porta 5081      │
 └───────┬───────┘        └──────────┬──────────┘
         │                           │
         ▼                           ▼
 ┌───────────────┐        ┌─────────────────────┐
-│  PostgreSQL   │        │     PostgreSQL       │
-│  estoque_db   │        │   faturamento_db     │
-│  porta 5432   │        │     porta 5433       │
+│  PostgreSQL   │        │     PostgreSQL      │
+│  estoque_db   │        │   faturamento_db    │
+│  porta 5432   │        │     porta 5433      │
 └───────────────┘        └─────────────────────┘
 ```
 
-Cada microsserviço possui **banco de dados independente**, garantindo isolamento total de responsabilidades.
+Cada microsserviço possui **banco de dados independente**.
 
 ---
 
-## 🚀 Stack Tecnológica
+## Tecnologias
 
 | Camada | Tecnologia |
 |--------|------------|
@@ -47,33 +45,23 @@ Cada microsserviço possui **banco de dados independente**, garantindo isolament
 
 ---
 
-## ✅ Requisitos Implementados
+## Requisitos Implementados
 
-### Obrigatórios
-
-| Requisito | Status | Detalhes |
-|-----------|--------|---------|
-| Cadastro de Produtos | ✅ | Código, Descrição, Saldo — persistidos no PostgreSQL |
-| Emissão de Notas Fiscais | ✅ | Numeração sequencial, status inicial Aberta |
-| Múltiplos produtos por nota | ✅ | Com validação de saldo em tempo real |
-| Botão de impressão com spinner | ✅ | Loading visual durante processamento |
-| Status muda para Fechada | ✅ | Após impressão via API |
-| Bloqueio de nota já fechada | ✅ | Botão desabilitado para notas Fechadas |
-| Débito automático de saldo | ✅ | Estoque atualizado ao imprimir |
-| Arquitetura de Microsserviços | ✅ | Estoque.API + Faturamento.API independentes |
-| Tratamento de Falhas | ✅ | Polly + Middleware + feedback visual |
-| Banco de dados real | ✅ | PostgreSQL via Docker |
-
-### Opcionais
-
-| Opcional | Status | Implementação |
-|----------|--------|---------------|
-| A — Concorrência | ✅ | Optimistic Concurrency via `RowVersion` no EF Core |
-| B — Inteligência Artificial | ❌ | Não implementado |
-| C — Idempotência | ✅ | `ChaveIdempotencia` no body + índice único no banco |
-
+| Requisito | Detalhes |
+|-----------|---------|
+| Cadastro de Produtos | Código, Descrição, Saldo — persistidos no PostgreSQL |
+| Emissão de Notas Fiscais | Numeração sequencial, status inicial Aberta |
+| Múltiplos produtos por nota | Com validação de saldo em tempo real |
+| Botão de impressão com spinner | Loading visual durante processamento |
+| Status muda para Fechada | Após impressão via API |
+| Bloqueio de nota já fechada | Botão desabilitado para notas Fechadas |
+| Débito automático de saldo | Estoque atualizado ao imprimir |
+| Arquitetura de Microsserviços | Estoque.API + Faturamento.API independentes |
+| Tratamento de Falhas | Polly + Middleware + feedback visual |
+| Banco de dados real | PostgreSQL via Docker |
+| Tratamento de concorrência | Optimistic Concurrency via `RowVersion` no EF Core |
+| Implemetação de idempotência | `ChaveIdempotencia` no body + índice único no banco |
 ---
-
 ## 📋 Detalhamento Técnico
 
 ### 1. Ciclos de Vida do Angular
