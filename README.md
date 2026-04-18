@@ -1,36 +1,47 @@
-# Sistema de Emissão de Notas Fiscais
+<div align="center">
 
-Projeto técnico de sistema fullstack de emissão de notas fiscais com arquitetura de microsserviços, desenvolvido com Angular, ASP.NET Core e PostgreSQL.
+<h1>Sistema de Emissão de Notas Fiscais</h1>
+
+![.NET](https://img.shields.io/badge/.NET_8-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular_18-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+
+---
+## Sobre o Projeto
+
+Sistema fullstack de emissão de notas fiscais desenvolvido como desafio técnico para a **Korp ERP by Viasoft**. A solução implementa uma arquitetura de microsserviços com comunicação HTTP REST, persistência real em banco de dados e resiliência a falhas.
 
 ---
 
 ## Arquitetura
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                   Angular 18 (porta 4200)               │
-│         Standalone Components + Angular Material        │
-└────────────────────┬────────────────────────────────────┘
-                     │ HTTP REST
-        ┌────────────┴────────────┐
-        │                         │
-        ▼                         ▼
-┌───────────────┐        ┌─────────────────────┐
-│  Estoque.API  │◄───────│   Faturamento.API   │
-│  porta 5034   │        │     porta 5081      │
-└───────┬───────┘        └──────────┬──────────┘
-        │                           │
-        ▼                           ▼
-┌───────────────┐        ┌─────────────────────┐
-│  PostgreSQL   │        │     PostgreSQL      │
-│  estoque_db   │        │   faturamento_db    │
-│  porta 5432   │        │     porta 5433      │
-└───────────────┘        └─────────────────────┘
+```text
++-----------------------------------------------------------+
+|                  Angular 18 (porta 4200)                  |
+|         Standalone Components + Angular Material          |
++---------+---------------------------------------+---------+
+          |                                       |
+HTTP REST |                             HTTP REST |
+          v                                       v
++-------------------+                   +-------------------+
+|    Estoque.API    |<-- debitar saldo -|  Faturamento.API  |
+|    porta 5034     |                   |    porta 5081     |
++---------+---------+                   +---------+---------+
+          |                                       |
+          v                                       v
++-------------------+                   +-------------------+
+|    PostgreSQL     |                   |    PostgreSQL     |
+|    estoque_db     |                   |  faturamento_db   |
+|    porta 5432     |                   |    porta 5433     |
++-------------------+                   +-------------------+
 ```
 
-Cada microsserviço possui **banco de dados independente**.
+> Cada microsserviço possui **banco de dados totalmente independente**.
 
 ---
+</div>
 
 ## Tecnologias
 
@@ -62,7 +73,7 @@ Cada microsserviço possui **banco de dados independente**.
 | Tratamento de concorrência | Optimistic Concurrency via `RowVersion` no EF Core |
 | Implemetação de idempotência | `ChaveIdempotencia` no body + índice único no banco |
 ---
-## 📋 Detalhamento Técnico
+## Detalhamento Técnico
 
 ### 1. Ciclos de Vida do Angular
 
@@ -194,7 +205,7 @@ Microsoft.EntityFrameworkCore.Design
 Microsoft.Extensions.Http.Polly
 ```
 
-### 8. Opcional A — Concorrência Otimista
+### 8. Concorrência Otimista
 
 ```csharp
 // Produto.cs
@@ -206,7 +217,7 @@ entity.Property(p => p.RowVersion).IsRowVersion();
 
 Se dois usuários tentarem debitar o mesmo produto simultaneamente, o EF Core detecta o conflito via `RowVersion` e lança `DbUpdateConcurrencyException`, retornando HTTP 409.
 
-### 9. Opcional C — Idempotência
+### 9. Idempotência
 
 ```csharp
 // NotasFiscaisController.cs
@@ -226,7 +237,7 @@ chaveIdempotencia: `REQ-${Date.now()}`
 
 ---
 
-## 🛠️ Como Executar Localmente
+## Como Executar Localmente
 
 ### Pré-requisitos
 
@@ -279,39 +290,12 @@ ng serve -o
 
 ---
 
-## 📁 Estrutura do Projeto
+## Desenvolvedor
 
-```
-Korp_Teste_FelipeZanon/
-├── Estoque.API/
-│   ├── Controllers/       # ProdutosController
-│   ├── Data/              # EstoqueDbContext
-│   ├── Middleware/        # ExceptionMiddleware
-│   ├── Models/            # Produto (com RowVersion)
-│   └── Program.cs
-├── Faturamento.API/
-│   ├── Controllers/       # NotasFiscaisController
-│   ├── Data/              # FaturamentoDbContext
-│   ├── Middleware/        # ExceptionMiddleware
-│   ├── Models/            # NotaFiscal, NotaFiscalItem
-│   └── Program.cs         # Polly configurado aqui
-├── faturamento-app/       # Angular 18
-│   └── src/app/
-│       ├── components/
-│       │   ├── produto-form/    # Cadastro de produto
-│       │   ├── produto-list/    # Tabela de estoque
-│       │   ├── nota-fiscal/     # Emissão de nota
-│       │   └── nota-lista/      # Lista com botão imprimir
-│       └── services/
-│           ├── api.ts           # HttpClient + RxJS
-│           └── refresh.service.ts # Subject para refresh
-└── docker-compose.yml     # 2 bancos PostgreSQL
-```
-
----
-
-## 👤 Desenvolvedor
-
-**Felipe Zanon**
+**Felipe Zanon de Souza**
 
 [![LinkedIn Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/felipe-zanon/)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/felipe-zanon)
+
+
+</div>
