@@ -325,5 +325,4 @@ Korp_Teste_FelipeZanon/
 ## 👤 Desenvolvedor
 
 **Felipe Zanon**
-
-Desenvolvido em Abril de 2026 como desafio técnico para a vaga de Desenvolvedor na **Korp ERP by Viasoft**.
+[![LinkedIn Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/felipe-zanon/)
