@@ -11,7 +11,7 @@
 ---
 ## Sobre o Projeto
 
-Sistema fullstack de emissão de notas fiscais desenvolvido como desafio técnico para a **Korp ERP by Viasoft**. A solução implementa uma arquitetura de microsserviços com comunicação HTTP REST, persistência real em banco de dados e resiliência a falhas.
+Sistema fullstack de emissão de notas fiscais. A solução implementa uma arquitetura de microsserviços com comunicação HTTP REST, persistência real em banco de dados e resiliência a falhas.
 
 ---
 
